@@ -8,12 +8,34 @@
 import UIKit
 
 class ViewController: UIViewController {
+    let colorWell: UIColorWell = {
+        let colorWell = UIColorWell()
+        colorWell.supportsAlpha = true
+        colorWell.selectedColor = .systemRed
+        colorWell.title = "Color Well"
+        return colorWell
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemRed
+        colorWell.backgroundColor = .systemBlue
+        view.addSubview(colorWell)
+        
+        colorWell.addTarget(self, action: #selector(colorChanged), for: .valueChanged)
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        colorWell.frame = CGRect(x: 20,
+                                 y: view.safeAreaInsets.top,
+                                 width: view.frame.size.width-40,
+                                 height: 50)
+    }
+    @objc private func colorChanged() {
+        view.backgroundColor = colorWell.selectedColor
 
 
+    }
+    
 }
 
